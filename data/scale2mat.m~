@@ -1,0 +1,8 @@
+function [] = scale2mat( fn )
+
+fid = fopen(fn);
+tline = fgetl(fid)
+while ischar(tline)
+    tline = 
+    tline = fgetl(fid);
+end
