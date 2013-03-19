@@ -1,6 +1,7 @@
-%function [ X, post, hypers ] = ...
-function [ hist_post, hist_params, nll, hist_assignments, arate, F ] =...
-    gplvm_dpmix_integrate_infer( latent_dimension, n_components, Y, labels, options )
+function [ sampled_mixtures, sampled_warpings, nll, ...
+           hist_assignments, acceptance_rate, movie_frames ] =...
+    gplvm_dpmix_integrate_infer( latent_dimension, n_components, Y, labels, ...
+                                 options )
 % GP-LVM with mixture of Gaussians latent p(X).
 %
 % latent_dimension is the dimension of the latent space.
@@ -16,24 +17,19 @@ function [ hist_post, hist_params, nll, hist_assignments, arate, F ] =...
 % Tomo and David
 % April 2012
 
-tic;
 
 if nargin < 4; labels = []; end
-%if nargin < 5; options = {}; end
-
-%addpath('minFunc');
-addpath('nutsmatlab');
 
 [N,input_dimension] = size(Y);
-
 num_iters = 10000;
 
-% options for hybrid monte calro
+% Default options for hybrid monte calro
 hmc_options.num_iters = 1;
 hmc_options.Tau = 25;
 hmc_options.epsilon = 0.001 * sqrt(N);
 hmc_options.isPlot = 0;
 
+% Default model options.
 isDP = 1;
 isGP = 1;
 isSamplingDPparameter = 0;
@@ -43,6 +39,12 @@ isGPLVMinit = 0;
 isMovie = 0;
 prior_r = 1;
 prior_alpha = 1;
+
+% Default plotting options.
+plot_options.circle_size = 0.1;
+plot_options.circle_alpha = 0.15;
+plot_options.num_points = 1000;
+
 if isfield( options, 'prior_r' )
     prior_r = options.prior_r;
 end
@@ -87,6 +89,15 @@ if isfield( options, 'isGPLVMinit' )
 end
 if isfield( options, 'isback' )
     hmc_options.isback = options.isback;
+end
+if isfield( options, 'circle_size' )
+    plot_options.circle_size = options.circle_size;
+end
+if isfield( options, 'circle_size' )
+    plot_options.circle_alpha = options.circle_alpha;
+end
+if isfield( options, 'circle_size' )
+    plot_options.num_points = options.num_points;
 end
 
 % Centering
@@ -158,7 +169,7 @@ params.log_hypers = log_hypers;
 global gammaterm_n;
 gammaterm_n = NaN(N,1);
 
-arate = 0;
+acceptance_rate = 0;
 arate_cnt = 0;
 arate_start = 100;
 
@@ -225,7 +236,7 @@ for i = 1:num_iters
                 [unwrapped_params, nll(i), arate0] = hmc(@joint_likelihood_integrate, unwrapped_params, ...
                     hmc_options, labels, Y, assignments, params, prior );
                 if i > arate_start
-                    arate = arate+arate0;
+                    acceptance_rate = acceptance_rate+arate0;
                     arate_cnt = arate_cnt+1;
                 end
                 %disp(arate/i);
@@ -260,8 +271,8 @@ for i = 1:num_iters
     run_hypers_gamma(i) = exp( params.log_hypers.gamma ) ;   
 
     %save normal-Wishart posteriors and GPLVM parameters
-    hist_post(i) = post;
-    hist_params(i) = params;
+    sampled_mixtures(i) = post;
+    sampled_warpings(i) = params;
     
     %drawing
     if isMovie == 1
@@ -283,7 +294,7 @@ for i = 1:num_iters
             draw_latent_representation( params.X, mix, assignments, labels );
             axis( [-7 5 -5 7]);
             drawnow;
-            F(i) = getframe;
+            movie_frames(i) = getframe;
         end
     end
     
@@ -303,6 +314,7 @@ for i = 1:num_iters
             end
             
             % Draw the current mixture parameters, along with the latent positions.
+            subplot(2,2,1); cla;
             if numel(labels) > 0
                 draw_latent_representation( params.X, mix, assignments, labels );
             else
@@ -311,26 +323,27 @@ for i = 1:num_iters
             
             if isGP == 1 && input_dimension == 2
                 % Draw the original data and current assigments
+                subplot(2,2,2); cla;
                 draw_gpmapping_mixgauss( params.X, Y, mix, params.log_hypers,...
-                    assignments, labels );
+                    assignments, labels, plot_options.circle_size, ...
+                    plot_options.circle_alpha, plot_options.num_points );
             end
             
-            figure(532130); clf;
+            %figure(532130); clf;
+            subplot(2,2,3); cla;
             plot(Ks,'b-');
             ylabel('number of clusters');
             
             % Sanity check
-%            if isGP == 1
+            if 0
                 figure(123); clf;
                 plot( nll, 'b-' );
                 ylabel('negative log likelihood');
-%            else
-%                figure(123); clf;
-%                plot( Ls, 'b-' );
-%                ylabel('log likelihood');
-%            end
+            end
+
             % Plot hypers over time
-            figure(123423); clf;
+            %figure(123423); clf;
+            subplot(2,2,4); cla;
             plot( run_hypers_alpha, 'b-' ); hold on;
             plot( run_hypers_inv_beta, 'r-' ); hold on;
             plot( 1./run_hypers_gamma, 'g-' ); hold on;
@@ -342,12 +355,6 @@ for i = 1:num_iters
     end
 end
 
-arate = arate/arate_cnt;
+acceptance_rate = acceptance_rate/arate_cnt;
 
-% Pack things up to return them.
-%hypers.alpha = exp( params.log_hypers.alpha ) ;
-%hypers.beta = 1 / exp( params.log_hypers.betainv ) ;
-%hypers.gamma = exp( params.log_hypers.gamma ) ;
-%X = params.X;
-toc;
 end

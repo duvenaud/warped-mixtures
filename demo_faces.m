@@ -66,7 +66,6 @@ for i = 1:numel(heads)
         
         options.epsilon = 0.01;
         options.Tau = 1;
-        options.prior_r = 1;
         num_components = 3;
         
         %Infinite Warped Mixture Model (DP&GPLVM)

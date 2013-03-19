@@ -1,6 +1,6 @@
 function draw_latent_representation( X, mix, assignments, labels )
 
-figure(100); clf;
+%figure(100); clf;
 
 %mix.decomps
 

@@ -1,6 +1,14 @@
 function draw_gpmapping_mixgauss( X, Y, mix, log_hypers, assignments,labels,circle_size,circle_alpha,N_points)
 
-figure(5432100); clf;
+% Plots the density manifolds in the observed space by sampling points in the
+% latent space, and warping them according to the posterior over warpings.
+%
+% David Duvenaud
+% Tomoharu Iwata
+%
+% 2012
+
+%figure(5432100); clf;
 
 [N,latent_dimension] = size(X);
 observed_dimension = size(Y,2);
