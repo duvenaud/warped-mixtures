@@ -11,6 +11,7 @@ function demo_spiral()
 
 addpath('util');
 addpath('data');
+addpath('misc');
 addpath('gpml/cov');
 addpath('gpml/util');
 

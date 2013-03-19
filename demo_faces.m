@@ -7,17 +7,18 @@ function [F] = demo_viz()
 % April 2012
 
 addpath('util');
+addpath('misc');
 addpath('data');
 addpath('gpml/cov');
 addpath('gpml/util');
 
 % Set the random seed, always the same for the datafolds.
-seed = 0;
+seed = 2;
 randn('state', seed);
 rand('twister', seed);    
 
-heads = {'spiral2'};
-%heads = {'umist_downsampled'};
+%heads = {'spiral2'};
+heads = {'umist_downsampled3'};
 
 %close all;
 num_fold = 1;
@@ -28,7 +29,7 @@ options.isMovie = 0;
 %options.hmc_isPlot = 1;
 options.hmc_isPlot = 0;
 %options.isPlot = 20;
-options.isGPLVMinit = 0;
+options.isGPLVMinit = 1;
 
 for i = 1:numel(heads)
     fn = sprintf('data/%s.mat',heads{i})
@@ -41,6 +42,7 @@ for i = 1:numel(heads)
     X = X * 2 - 1;
     assert(all(max(X, [], 1) <= 1))
     assert(all(min(X, [], 1) >= -1))
+    
     if num_fold > 1
         cv = cvpartition(N,'kfold',num_fold);
     end
@@ -63,10 +65,12 @@ for i = 1:numel(heads)
         %options.num_iters = 4000;
         %options.epslion = 0.01;
         %options.Tau = 25;
-        
-        options.epsilon = 0.01;
-        options.Tau = 1;
-        num_components = 3;
+        options.num_iters = 500;
+        options.epsilon = 0.005;
+        options.Tau = 25;
+        num_components = 5;
+        options.prior_r = 1e-1;
+        options.prior_alpha = 1;
         
         %Infinite Warped Mixture Model (DP&GPLVM)
         options.isDP = 1;
@@ -77,6 +81,8 @@ for i = 1:numel(heads)
                 num_components,trainX,trainy,options);
             %movie(F);
             %movie2avi(F,'animation.avi');
+            ofn = 'results_faces/demo_faces2.mat';
+            save(ofn,'hist_post','hist_params','Ls','hist_assignments','F');
         end
     end
 end

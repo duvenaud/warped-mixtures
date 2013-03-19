@@ -4,7 +4,7 @@
 % Tomoharu Iwata
 % David Duvenaud
 
-
+addpath('misc')
 
 % Run cross validation experiments
 demo_crossvalid
