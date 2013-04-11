@@ -6,16 +6,17 @@
 
 addpath('misc')
 
-% Run cross validation experiments
-demo_crossvalid
 % set num_fold (the number of cross-validation sets)
-num_fold=1 % use all data
+num_fold=1
+
+% Run cross validation experiments
+demo_crossvalid(num_fold)
 
 % Calculate rand index.
-demo_clustering_cv
+demo_clustering_cv(num_fold)
 
 % Calculate test likelihood.
-demo_densityestimation_cv
+demo_densityestimation_cv(num_fold)
 
 % Output rand index results in latex.
 latexclustering

@@ -1,4 +1,4 @@
-function [] = demo_densityestimation_cv
+function [] = demo_densityestimation_cv(num_fold)
 
 addpath('util');
 addpath('data');
@@ -35,7 +35,7 @@ heads = {'iris'};
 heads = {'halfcircles2_N100K3'};
 
 %data_iters = 2;
-data_iters = 20;
+data_iters = num_fold;
 
 %maxNumCompThreads(10);
 

@@ -7,7 +7,7 @@ heads = {'spiral2','halfcircles2_N100K3','circles_N50K2', ...
 fold_num = 20;
 
 for i = 1:numel(heads)
-  fn = sprintf('results_cv%d/densityestimation_cv_%s.txt',fold_num,heads{i});
+  fn = sprintf('results_cv%d/densityestimation_cv_%s.txt',num_fold,heads{i});
   results(:,:,i) = load(fn);
 end
 

@@ -1,4 +1,4 @@
-function [] = demo_clustering_cv
+function [] = demo_clustering_cv( num_fold )
 
 addpath('util');
 addpath('data');
@@ -35,7 +35,7 @@ heads = {'vowel'};
 heads = {'halfcircles2_N100K3'};
 
 %data_iters = 10;
-data_iters = 20;
+data_iters = num_fold;
 
 for i = 1:numel(heads);
     fn = sprintf('data/%s.mat',heads{i})

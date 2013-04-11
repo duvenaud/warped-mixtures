@@ -1,4 +1,4 @@
-function [] = demo_crossvalid()
+function [] = demo_crossvalid(num_fold)
 % A simple demo of the warped mixture models
 %
 % David Duvenaud
@@ -53,12 +53,15 @@ heads = {'halfcircles2_N100K3'};
 
 close all;
 %num_fold = 1;
-num_fold = 20;
+%num_fold = 2;
 options = [];
 options.isPlot = 0;
 options.hmc_isPlot = 0;
 %options.isPlot = 20;
 options.isGPLVMinit = 1;
+
+% Make a directory to store the results.
+mkdir(sprintf('results_cv%d',num_fold));
 
 for i = 1:numel(heads)
     fn = sprintf('data/%s.mat',heads{i})

@@ -5,10 +5,10 @@ clear results;
 heads = {'spiral2','iris', 'glass', 'wine'};
 heads = {'spiral2','halfcircles2_N100K3','circles_N50K2', ...
          'pinwheel_N50K5','iris', 'glass', 'wine','vowel'};
-fold_num = 20;
+%fold_num = 20;
 
 for i = 1:numel(heads)
-  fn = sprintf('results_cv%d/clustering_cv_%s.txt',fold_num,heads{i});
+  fn = sprintf('results_cv%d/clustering_cv_%s.txt',num_fold,heads{i});
   results(:,:,i) = load(fn)
 end
 
@@ -19,7 +19,7 @@ heads,'rand index',0)
 fold_num = 20;
 
 for i = 1:numel(heads)
-  fn = sprintf('results_cv%d/clustering_cv_%s.txt',fold_num,heads{i});
+  fn = sprintf('results_cv%d/clustering_cv_%s.txt',num_fold,heads{i});
   results(:,:,i) = load(fn)
 end
 
