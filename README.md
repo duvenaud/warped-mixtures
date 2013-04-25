@@ -17,6 +17,6 @@ and
 [David Duvenaud](http://mlg.eng.cam.ac.uk/duvenaud/)
 
 If you have any questions about getting this code running, feel free to email us:  
-dkd23@cam.acuk and ti242@cam.ac.uk
+dkd23@cam.ac.uk and ti242@cam.ac.uk
 
 
