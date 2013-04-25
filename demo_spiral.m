@@ -1,12 +1,10 @@
 function demo_spiral()
 % A simple demo of the warped mixture model.
 %
-% To try this code on another dataset, 
-%
 % David Duvenaud
 % Tomoharu Iwata
 %
-% March 2013 2012
+% March 2013
 % ====================
 
 addpath('util');
@@ -37,8 +35,8 @@ options.isGPLVMinit = 0;   % Initialize using GP-LVM.
 
 % HMC sampler options. 
 % Adjust these until you get a mix of accepts and rejects.
-options.epsilon = 0.02;   % Step size.
-options.Tau = 25;         % Number of steps.
+options.epsilon = 0.02;    % Step size.
+options.Tau = 25;          % Number of steps.
 
 % Plotting options.
 options.isPlot = 10;       % How often to plot.
