@@ -14,10 +14,9 @@ function p = ag_plot_little_circles(x, y, circle, col, alpha)
     mx = w*sin(theta);
     my = h*cos(theta);
     num = 0;
+    p = NaN(size(y,2), 1);
     for k = 1:max(size(x))
-        for f = 1:size(y,2)
-            num = num+1;
-            p(num) = patch(x(k)+mx, y(k,f)+my, col, 'FaceColor', col, 'FaceAlpha', alpha, 'EdgeColor', 'none');
-        end
+        p(k) = patch(x(k)+mx, y(k)+my, col, 'FaceColor', col, ...
+                     'FaceAlpha', alpha, 'EdgeColor', 'none');
     end
 end
