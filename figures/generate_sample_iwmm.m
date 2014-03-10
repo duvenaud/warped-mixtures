@@ -91,7 +91,7 @@ set_fig_units_cm(figsize_cm, figsize_cm);
 %tightfig;
 if savefigs
     myaa('publish')
-    filename = sprintf('gplvm-latent-n-%d-seed%d.eps',num_points, seed);
+    filename = sprintf('gplvm-latent-n-%d-seed%d',num_points, seed);
     savepng(gcf, filename);
 end
 
@@ -137,7 +137,7 @@ set_fig_units_cm(figsize_cm, figsize_cm);
 
 if savefigs
     myaa('publish')
-    filename = sprintf('gplvm-observed-n-%d-seed%d.eps',num_points, seed);
+    filename = sprintf('gplvm-observed-n-%d-seed%d',num_points, seed);
     savepng(gcf, filename);
 end
 end
