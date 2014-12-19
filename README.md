@@ -1,6 +1,8 @@
 Warped Mixture Models
 ===============
 
+<img src="http://mlg.eng.cam.ac.uk/duvenaud/pictures/iwmm_icon.png">
+
 Code for inferring nonparametric cluster shapes using warped mixtures.  For a description of this model, and some initial experiments using this code, see:
 
 *Warped Mixtures for Nonparametric Cluster Shapes*  
