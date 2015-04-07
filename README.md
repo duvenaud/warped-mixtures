@@ -16,9 +16,11 @@ To see a nice demo of the sampler, call `demo_spiral.m`
 Code authors:
 [Tomoharu Iwata](http://www.kecl.ntt.co.jp/as/members/iwata/)
 and
-[David Duvenaud](http://mlg.eng.cam.ac.uk/duvenaud/)
+[David Duvenaud](http://people.seas.harvard.edu/~dduvenaud/)
 
 If you have any questions about getting this code running, feel free to email us:  
-dkd23@cam.ac.uk and ti242@cam.ac.uk
+dduvenaud@seas.harvard.edu and ti242@cam.ac.uk
+
+
 
 
