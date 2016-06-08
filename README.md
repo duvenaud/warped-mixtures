@@ -19,7 +19,7 @@ and
 [David Duvenaud](http://people.seas.harvard.edu/~dduvenaud/)
 
 If you have any questions about getting this code running, feel free to email us:  
-dduvenaud@seas.harvard.edu and ti242@cam.ac.uk
+duvenaud@cs.toronto.edu and ti242@cam.ac.uk
 
 
 
